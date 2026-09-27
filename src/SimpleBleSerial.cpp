@@ -161,8 +161,8 @@ String SimpleBleSerial::readSpecifiedText(const String& keyword) {
 // ----------------------------------------------------
 
 String SimpleBleSerial::getDeviceMacAddress() {
-    std::string mac = BLEDevice::getAddress().toString();
-    return String(mac.c_str());
+    String mac = BLEDevice::getAddress().toString();
+    return mac;
 }
 
 void SimpleBleSerial::clearBuffer() {
@@ -263,10 +263,8 @@ void SimpleBleSerial::onDisconnect(BLEServer* pServer) {
 }
 
 void SimpleBleSerial::onWrite(BLECharacteristic *pCharacteristic) {
-    std::string rxValue = pCharacteristic->getValue();
+    String rxValue = pCharacteristic->getValue();
     if (rxValue.length() > 0) {
-        for (int i = 0; i < rxValue.length(); i++) {
-            rxBuffer += (char)rxValue[i];
-        }
+        rxBuffer += rxValue;
     }
 }
